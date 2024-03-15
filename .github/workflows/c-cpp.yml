@@ -15,9 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Generate Prime Numbers
-      if: steps.cache-primes.outputs.cache-hit != 'true'
-      run: gcc main.c
+   
       
     - name: Cache Primes
       id: cache-primes
@@ -25,6 +23,10 @@ jobs:
       with:
         path: a.out
         key: ${{ runner.os }}-${{ hashFiles('main.c') }}
+    
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: gcc main.c
 
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-hit == 'true'
